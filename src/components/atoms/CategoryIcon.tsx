@@ -1,9 +1,6 @@
 import { getIcon } from "@/helpers/icons";
+import { Props } from "@/types/interfaces"
 
-interface Props {
-  category: string;
-  type: 'income' | 'expense';
-}
 
 export const CategoryIcon = ({ category, type }: Props) => (
   <div className={`w-9 h-9 flex items-center justify-center rounded-full text-lg ${

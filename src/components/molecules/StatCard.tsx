@@ -1,15 +1,8 @@
 'use client'
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { StatCardProps } from "@/types/interfaces";
 
-interface StatCardProps {
-  title: string;
-  amount: number;
-  icon: React.ReactNode;
-  color?: string;
-  prefix?: string;
-  currency?: string;
-}
 
 export function StatCard({ title, amount, icon, color = "", prefix = "", currency = "€" }: StatCardProps) {
   const [mounted, setMounted] = useState(false);

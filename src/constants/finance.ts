@@ -12,3 +12,12 @@ export const CATEGORY_ICONS: Record<string, string> = {
   health: "💊", gym: "💪", shopping: "🛍️", entertainment: "🎮", 
   travel: "✈️", gift: "🎁", subscription: "📺", coffee: "☕", savings: "🏦"
 };
+
+export const CATEGORIES = [
+  { name: "Food", icon: "🍔" }, { name: "Grocery", icon: "🛒" }, { name: "Salary", icon: "💰" },
+  { name: "Work", icon: "💼" }, { name: "Transport", icon: "🚗" }, { name: "Taxi", icon: "🚕" },
+  { name: "Rent", icon: "🏠" }, { name: "Utilities", icon: "⚡" }, { name: "Health", icon: "💊" },
+  { name: "Gym", icon: "💪" }, { name: "Shopping", icon: "🛍️" }, { name: "Entertainment", icon: "🎮" },
+  { name: "Travel", icon: "✈️" }, { name: "Gift", icon: "🎁" }, { name: "Subscription", icon: "📺" },
+  { name: "Coffee", icon: "☕" }, { name: "Savings", icon: "🏦" },
+];

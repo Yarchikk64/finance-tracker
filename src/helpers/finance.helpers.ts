@@ -1,4 +1,4 @@
-import { Transaction, Totals } from "@/types/interfaces";
+import { Transaction, Totals, GroupedTransactions } from "@/types/interfaces";
 
 export const getTotals = (transactions: Transaction[]): Totals => {
   return transactions.reduce(
@@ -12,12 +12,7 @@ export const getTotals = (transactions: Transaction[]): Totals => {
   );
 };
 
-interface GroupedTransactions {
-  [date: string]: {
-    items: Transaction[];
-    dailyTotal: number;
-  };
-}
+
 
 export const groupTransactionsByDate = (transactions: Transaction[]): GroupedTransactions => {
   return transactions.reduce((acc: GroupedTransactions, t) => {

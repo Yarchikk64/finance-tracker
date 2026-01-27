@@ -1,11 +1,6 @@
-// src/components/atoms/DateSelect.tsx
-interface Props {
-  value: number;
-  options: { label: string | number; value: number }[];
-  onChange: (val: number) => void;
-}
+import { DateSelectProps } from "@/types/interfaces";
 
-export const DateSelect = ({ value, options, onChange }: Props) => (
+export const DateSelect = ({ value, options, onChange }: DateSelectProps) => (
   <select 
     value={value} 
     onChange={(e) => onChange(Number(e.target.value))} 

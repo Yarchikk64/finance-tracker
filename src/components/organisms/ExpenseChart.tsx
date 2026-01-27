@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PieChart as PieChartIcon } from "lucide-react";
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { COLORS } from "@/constants/finance";
+import { ChartData } from "@/types/interfaces";
 
 interface ExpenseChartProps {
-  data: any[];
+  data: ChartData[];
 }
 
 export const ExpenseChart = observer(({ data }: ExpenseChartProps) => {
@@ -35,7 +36,9 @@ export const ExpenseChart = observer(({ data }: ExpenseChartProps) => {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip formatter={(v: number) => `${v.toFixed(2)}${financeStore.currency}`} />
+              <Tooltip formatter={(value: number | string) => [`${Number(value).toFixed(2)}${financeStore.currency}`,
+              "Amount"
+              ]} />
               <Legend />
             </PieChart>
           </ResponsiveContainer>

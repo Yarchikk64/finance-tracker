@@ -1,5 +1,6 @@
 // src/services/transaction.service.ts
 import { supabase } from "@/lib/supabase";
+import { Transaction } from "@/types/interfaces";
 
 export const TransactionService = {
   // Твои текущие методы
@@ -24,5 +25,16 @@ export const TransactionService = {
 
   async signOut() {
     await supabase.auth.signOut();
+  },
+
+  async create(data: Omit<Transaction, 'id' | 'user_id'>) {
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) throw new Error("No user found");
+
+    return await supabase
+      .from("transactions")
+      .insert([{ ...data, user_id: user.id }])
+      .select()
+      .single();
   }
 };

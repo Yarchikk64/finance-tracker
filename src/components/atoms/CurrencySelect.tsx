@@ -1,12 +1,9 @@
 import { CURRENCIES } from "@/constants/finance";
 import { Coins } from "lucide-react";
+import { CurrencySelectProps } from "@/types/interfaces";
 
-interface Props {
-  value: string;
-  onChange: (val: string) => void;
-}
 
-export const CurrencySelect = ({ value, onChange }: Props) => (
+export const CurrencySelect = ({ value, onChange }: CurrencySelectProps) => (
   <div className="flex items-center gap-2 border-r pr-4 mr-2">
     <Coins size={18} className="text-primary" />
     <select 
