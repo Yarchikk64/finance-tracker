@@ -1,9 +1,7 @@
-// src/services/transaction.service.ts
 import { supabase } from "@/lib/supabase";
 import { Transaction } from "@/types/interfaces";
 
 export const TransactionService = {
-  // Твои текущие методы
   async fetchAll() {
     const { data } = await supabase.from('transactions').select('*').order('date', { ascending: false });
     return data || [];

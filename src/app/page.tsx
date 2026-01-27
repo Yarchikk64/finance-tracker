@@ -6,23 +6,19 @@ import { observer } from "mobx-react-lite";
 import { financeStore } from "@/store/finance.store";
 import { TransactionService } from "../services/transactions";
 
-// Atoms & Molecules
 import { CurrencySelect } from "@/components/atoms/CurrencySelect";
 import { DateSelect } from "@/components/atoms/DateSelect";
 import { StatCard } from "@/components/molecules/StatCard";
 
-// Organisms
 import { Navbar } from "@/components/organisms/Navbar";
 import { SavingsGoals } from "@/components/organisms/SavingsGoals";
 import { TransactionHistory } from "@/components/organisms/TransactionHistory";
 import { ExpenseChart } from "@/components/organisms/ExpenseChart";
 
-// Icons & Constants
 import { Wallet, ArrowUpCircle, ArrowDownCircle, CalendarDays } from "lucide-react";
 import { months } from "@/constants/finance";
 import { getTotals } from "@/helpers/finance.helpers";
 
-// 1. Сначала объявляем именованный компонент
 const HomePage = observer(() => {
   const router = useRouter();
   const [mounted, setMounted] = useState(false);
@@ -30,7 +26,6 @@ const HomePage = observer(() => {
   useEffect(() => {
     setMounted(true);
     
-    // Инициализируем настройки из localStorage
     financeStore.initSettings();
 
     const init = async () => {
@@ -41,10 +36,8 @@ const HomePage = observer(() => {
     init();
   }, [router]);
 
-  // Считаем итоги на основе отфильтрованных в сторе данных
   const { income, expenses, balance } = getTotals(financeStore.filteredTransactions);
 
-  // Защита от ошибок гидратации (SSR vs Client Side)
   if (!mounted) {
     return (
       <div className="h-screen flex items-center justify-center bg-white">
@@ -76,7 +69,6 @@ const HomePage = observer(() => {
         />
       </div>
 
-      {/* STATS */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
         <StatCard 
           title="Balance" 
@@ -116,5 +108,4 @@ const HomePage = observer(() => {
   );
 });
 
-// 2. Делаем именованный экспорт по умолчанию
 export default HomePage;
