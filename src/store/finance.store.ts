@@ -7,6 +7,7 @@ class FinanceStore {
   goals: Goal[] = [];
   isLoading = false;
   currency = "€";
+  locale = "en-US";
   
   selectedMonth = new Date().getMonth();
   selectedYear = new Date().getFullYear();
@@ -18,16 +19,27 @@ class FinanceStore {
   initSettings() {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("preferred_currency");
-      if (saved) {
-        runInAction(() => {
-          this.currency = saved;
-        });
-      }
+      if (saved) runInAction(() => { this.currency = saved; });
+      runInAction(() => {
+        this.locale = navigator.language || "en-US";
+      });
     }
   }
 
   setSelectedMonth(month: number) { this.selectedMonth = month; }
   setSelectedYear(year: number) { this.selectedYear = year; }
+
+  formatAmount(amount: number) {
+    const currencyMap: Record<string, string> = {
+      "€": "EUR", "$": "USD", "zł": "PLN", "₽": "RUB"
+    };
+    const currencyCode = currencyMap[this.currency] || "USD";
+    return new Intl.NumberFormat(this.locale, {
+      style: "currency",
+      currency: currencyCode,
+      minimumFractionDigits: 2,
+    }).format(amount);
+  }
 
   get filteredTransactions() {
     return this.transactions.filter(t => {
@@ -41,11 +53,8 @@ class FinanceStore {
       .filter(t => t.type === 'expense')
       .reduce((acc: ChartData[], curr) => {
         const existing = acc.find(item => item.name === curr.category);
-        if (existing) {
-          existing.value += curr.amount;
-        } else {
-          acc.push({ name: curr.category, value: curr.amount });
-        }
+        if (existing) existing.value += curr.amount;
+        else acc.push({ name: curr.category, value: curr.amount });
         return acc;
       }, []);
   }
@@ -66,51 +75,42 @@ class FinanceStore {
   async fetchAllData() {
     this.isLoading = true;
     try {
-      const [trans, g]: [Transaction[], Goal[]] = await Promise.all([
+      const [trans, g] = await Promise.all([
         TransactionService.fetchAll(),
         TransactionService.fetchGoals()
       ]);
-      
       runInAction(() => {
-        this.transactions = trans.sort(
+        this.transactions = (trans as Transaction[]).sort(
           (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
         );
-        this.goals = g;
+        this.goals = g as Goal[];
         this.isLoading = false;
       });
     } catch (error) {
       runInAction(() => { this.isLoading = false; });
-      console.error("Failed to fetch", error);
     }
   }
 
   setCurrency(symbol: string) {
     this.currency = symbol;
-    if (typeof window !== "undefined") {
-      localStorage.setItem("preferred_currency", symbol);
-    }
+    if (typeof window !== "undefined") localStorage.setItem("preferred_currency", symbol);
   }
 
   async deleteTransaction(id: number) {
     const { error } = await TransactionService.delete(id);
     if (!error) {
-      runInAction(() => {
-        this.transactions = this.transactions.filter(t => t.id !== id);
-      });
+      runInAction(() => { this.transactions = this.transactions.filter(t => t.id !== id); });
       return true;
     }
     return false;
   }
 
-  async addTransaction(transactionData: Omit<Transaction, 'id' | 'user_id'>) {
+  async addTransaction(transactionData: Omit<Transaction, 'id' | 'user_id' | 'created_at'>) {
     const { data: resultData, error } = await TransactionService.create(transactionData);
-
     if (!error && resultData) {
       runInAction(() => {
         this.transactions.unshift(resultData as Transaction);
-        this.transactions = [...this.transactions].sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-        );
+        this.transactions = [...this.transactions].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
       });
       return true;
     }

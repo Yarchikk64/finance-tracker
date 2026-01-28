@@ -33,7 +33,6 @@ export const Navbar = () => {
           <DialogContent>
             <DialogHeader><DialogTitle>New Transaction</DialogTitle></DialogHeader>
             <AddTransactionForm 
-              currency={financeStore.currency} 
               onRefresh={() => { financeStore.fetchAllData(); setIsDialogOpen(false); }} 
             />
           </DialogContent>

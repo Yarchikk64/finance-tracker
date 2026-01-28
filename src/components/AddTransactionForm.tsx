@@ -11,8 +11,8 @@ import { CategorySelect } from "./atoms/CategorySelect";
 import { GoalSelect } from "./atoms/GoalSelect"; 
 import { AddTransactionFormProps } from "@/types/interfaces";
 
-export const AddTransactionForm = observer(({ onSuccess }: AddTransactionFormProps) => {
-  const { loading, category, setCategory, type, setType, handleSubmit } = useTransactionForm(onSuccess);
+export const AddTransactionForm = observer(({ onRefresh }: AddTransactionFormProps) => {
+  const { loading, category, setCategory, type, setType, handleSubmit } = useTransactionForm(onRefresh);
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4 pt-4">

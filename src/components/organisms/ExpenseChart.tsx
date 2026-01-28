@@ -36,7 +36,7 @@ export const ExpenseChart = observer(({ data }: ExpenseChartProps) => {
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
               </Pie>
-              <Tooltip formatter={(value: number | string) => [`${Number(value).toFixed(2)}${financeStore.currency}`,
+              <Tooltip formatter={(value: number | string | undefined) => [`${Number(value).toFixed(2)}${financeStore.currency}`,
               "Amount"
               ]} />
               <Legend />

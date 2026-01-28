@@ -12,16 +12,23 @@ export const getTotals = (transactions: Transaction[]): Totals => {
   );
 };
 
-
-
-export const groupTransactionsByDate = (transactions: Transaction[]): GroupedTransactions => {
+export const groupTransactionsByDate = (
+  transactions: Transaction[], 
+  locale: string = 'en-US'
+): GroupedTransactions => {
   return transactions.reduce((acc: GroupedTransactions, t) => {
-    const date = new Date(t.date).toLocaleDateString('en-GB');
+    const date = new Date(t.date).toLocaleDateString(locale, {
+      day: 'numeric',
+      month: 'short',
+    });
+
     if (!acc[date]) {
       acc[date] = { items: [], dailyTotal: 0 };
     }
+    
     acc[date].items.push(t);
     acc[date].dailyTotal += t.type === 'income' ? t.amount : -t.amount;
+    
     return acc;
   }, {});
 };

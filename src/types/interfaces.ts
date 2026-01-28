@@ -41,6 +41,7 @@ export interface TransactionHistoryProps {
 export interface ChartData {
     name: string;
     value: number;
+    [key: string]: string | number;
 }
 
 export interface StatCardProps {
@@ -76,7 +77,7 @@ export interface GroupedTransactions {
 }
 
 export interface AddTransactionFormProps {
-  onSuccess?: () => void;
+  onRefresh?: () => void;
 }
 
 export interface Category {
