@@ -25,13 +25,6 @@ Data Transformation: * Complex data manipulation using .reduce() to group flat t
   Real-time calculation of monthly balances, total income, and total expenses directly on the client side.
 Database: Two relational tables (transactions and savings_goals) linked via goal_id to track specific savings contributions.
 
-⚙️ Installation & Setup
-1. Clone the repository:
-2. Install dependencies: npm install
-3. Create a .env.local file and add your Supabase credentials: 
-  NEXT_PUBLIC_SUPABASE_URL=https://vyadmpxbzmirgsfsulnd.supabase.co
-  NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_L5_M7sPtQ-d42bOTo7V2UA_wUXQgRek
-4. Run the development server: npm run dev
 
 💡 Core Competencies Demonstrated:
 Backend Integration: Implementing a BaaS (Supabase) for authentication and real-time database operations.
